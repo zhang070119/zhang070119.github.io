@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>来自朋友的温柔提醒</title>
+  <style>
+    /* 匹配图片的背景和弹窗样式 */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff; /* 图片中是白色背景 */
+      font-family: "微软雅黑", sans-serif;
+      overflow: hidden; /* 隐藏页面滚动条 */
+    }
+    /* 彩色聊天气泡（核心样式） */
+    .bubble {
+      position: absolute; /* 弹窗随机位置 */
+      padding: 20px 24px;
+      border-radius: 35px; /* 圆角气泡，和图片一致 */
+      color: white; /* 文字白色，醒目 */
+      font-size: 25px; /* 文字大小匹配图片 */
+      max-width: 200px; /* 气泡最大宽度，避免文字过长 */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 轻微阴影，更真实 */
+      animation: popIn 0.6s ease; /* 弹窗弹出动画 */
+    }
+    /* 弹窗弹出动画，模拟“突然出现”的效果 */
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // 1. 匹配图片的“七七”专属文案（可直接替换成其他名字）
+    const targetName = "吴琪";
+    const messages = [
+      `${targetName}~，你不是一个人`,
+      `${targetName}~，我一直都在你身边`,
+      `${targetName}~，我相信你可以的`,
+      `${targetName}~，你值得所有美好`,
+      `${targetName}~，不开心可以找我`,
+      `${targetName}~，别熬夜了`,
+      `${targetName}~，要保重身体`,
+      `${targetName}~，别想太多 有我陪着你`,
+      `${targetName}~，开心最重要`,
+      `${targetName}~，我想你了`,
+      `${targetName}~，早点休息吧`,
+      `${targetName}~，要好好爱自己`,
+      `${targetName}~，做自己就好 别太勉强自己`
+    ];
+
+    // 2. 匹配图片的“五颜六色”（用图片中常见的亮色系）
+    const bubbleColors = [
+      "#FF6B6B", // 粉色
+      "#4ECDC4", // 青色
+      "#45B7D1", // 蓝色
+      "#FFA07A", // 橙色
+      "#98D8C8", // 浅绿
+      "#F7DC6F"  // 黄色
+    ];
+
+    // 3. 生成随机弹窗（核心逻辑）
+    function createBubble() {
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      // 随机选文案和颜色
+      bubble.textContent = messages[Math.floor(Math.random() * messages.length)];
+      bubble.style.backgroundColor = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
+      // 随机位置（避免弹窗超出屏幕）
+      const x = Math.random() * (window.innerWidth - 200);
+      const y = Math.random() * (window.innerHeight - 100);
+      bubble.style.left = `${x}px`;
+      bubble.style.top = `${y}px`;
+      // 添加到页面
+      document.body.appendChild(bubble);
+      // 5秒后自动消失，循环生成新弹窗
+      setTimeout(() => {
+        bubble.style.opacity = 0;
+        bubble.style.transition = "opacity 0.5s ease";
+        setTimeout(() => document.body.removeChild(bubble), 500);
+        createBubble(); // 循环创建，保持满屏效果
+      }, 5000);
+    }
+
+    // 初始化：一次生成10个弹窗，间隔0.5秒，避免拥挤
+    for (let i = 0; i < 10; i++) {
+      setTimeout(createBubble, i * 500);
+    }
+  </script>
+</body>
+</html>
